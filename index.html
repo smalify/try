@@ -1,27 +1,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<br>
-<button class="upload">Upload</button><br><br>
-<input type="file" id="myfile" name="myfile">
+
+<button class="upload">Upload</button>
 
 <script>
 function upload() {
-    var method = "POST";
-    var url = "http://127.0.0.1:9090/status";
-
-    var xhr = new XMLHttpRequest();
-
-    xhr.open(method, url);
-
-    xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-
-    xhr.send();
-	alert(xhr.status);
-	alert(xhr.responseText);
-	xhr.onerror = function(){
-		alert("Load Error , first Enable binloader server from Setting GoldHEN");
-	};
+    fetch(
+    'http://localhost:9090/status',
+    { method: 'GET' }
+  )
+  .then( response => alert(response.json()) )
+  .then( json => alert(json) )
+  .catch( error => alert('error:', error) );
 }
 
 $(document).ready(function(){
