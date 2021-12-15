@@ -1,0 +1,29 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<button class="upload">Upload</button>
+
+<script>
+function upload() {
+    var method = "POST";
+    var url = "http://127.0.0.1:9090/status";
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open(method, url);
+
+    xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+
+    xhr.send();
+	alert(xhr.status);
+	alert(xhr.responseText);
+	xhr.onerror = function(){
+		alert("Load Error , first Enable binloader server from Setting GoldHEN");
+	};
+}
+
+$(document).ready(function(){
+$('.upload').click(upload);
+});
+</script>
