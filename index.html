@@ -5,13 +5,9 @@
 
 <script>
 function upload() {
-    fetch(
-    'http://localhost:9090/status',
-    { method: 'GET' }
-  )
-  .then( response => alert(response.json()) )
-  .then( json => alert(json) )
-  .catch( error => alert('error:', error) );
+    $.ajax('http://localhost:9090/status')
+  .done(data => console.log(data))
+  .fail((xhr, status) => console.log('error:', status));
 }
 
 $(document).ready(function(){
