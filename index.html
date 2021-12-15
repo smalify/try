@@ -1,13 +1,13 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<button class="upload">Upload</button>
+<button class="upload">Uploade</button>
 
 <script>
 function upload() {
     $.ajax('http://localhost:9090/status')
-  .done(data => console.log(data))
-  .fail((xhr, status) => console.log('error:', status));
+  .done(data => alert(data))
+  .fail((xhr, status) => alert('error:', status));
 }
 
 $(document).ready(function(){
