@@ -94,9 +94,8 @@ def decrypt(ct):
     pt = unpad(cipher1.decrypt(data), 16)
     return pt
     
-cookie_file, cookie_jar, TOKEN = "", "", ""
+cookie_file, cookie_jar, TOKEN = init_cookie_jar()
 KEY = ""
-print("KEY: "+KEY)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -108,6 +107,7 @@ def favicon():
 def home():
     cookie_file, cookie_jar, TOKEN = init_cookie_jar()
     KEY = getkey()
+    print("KEY: "+KEY)
     contentId = request.args.get('id')
     username = request.args.get('username')
     password = request.args.get('password')
