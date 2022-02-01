@@ -94,7 +94,7 @@ def decrypt(ct):
     pt = unpad(cipher1.decrypt(data), 16)
     return pt
     
-cookie_file, cookie_jar, TOKEN = ""
+cookie_file, cookie_jar, TOKEN = "", "", ""
 KEY = ""
 print("KEY: "+KEY)
 
