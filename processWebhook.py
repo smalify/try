@@ -48,7 +48,7 @@ def make_request_post(url, data, cookie_file, cookie_jar, TOKEN):
     request.add_header("sec-fetch-mode", 'cors')
     request.add_header("sec-fetch-site", 'same-origin')
     request.add_header("x-requested-with", 'XMLHttpRequest')
-    response = opener.open(request, data.encode("utf8"))
+    response = opener.open(request, data)
 
     data = response.read()
     cookie_jar.save(cookie_file, ignore_discard=True)
