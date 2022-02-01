@@ -96,6 +96,7 @@ def decrypt(ct):
     
 cookie_file, cookie_jar, TOKEN = init_cookie_jar()
 KEY = getkey()
+print(KEY)
 
 @app.route('/favicon.ico')
 def favicon():
