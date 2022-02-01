@@ -10,7 +10,7 @@ from Crypto.Cipher import AES
 
 app = flask.Flask(__name__)
 
-global proc = None
+proc = None
 
 class SafeString(str):
     def title(self):
