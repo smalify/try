@@ -48,7 +48,7 @@ def make_request_post(url, data, cookie_file, cookie_jar, TOKEN):
     request.add_header("sec-fetch-mode", 'cors')
     request.add_header("sec-fetch-site", 'same-origin')
     request.add_header("x-requested-with", 'XMLHttpRequest')
-    response = opener.open(request, data)
+    response = opener.open(request, data.encode("utf8"))
 
     data = response.read()
     cookie_jar.save(cookie_file, ignore_discard=True)
@@ -56,7 +56,8 @@ def make_request_post(url, data, cookie_file, cookie_jar, TOKEN):
 
 def get_decrypted_data(url,uname,passwd):
     status = make_request("http://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
-    if status == 'fail':
+    print(status)
+    if status == b'fail':
         make_request_post("http://www.sunnxt.com/login",'{"email":"'+uname+'","password":"'+passwd+'"}', cookie_file, cookie_jar, TOKEN)
         status = make_request("http://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
     data = make_request(url, cookie_file, cookie_jar, TOKEN, True)
