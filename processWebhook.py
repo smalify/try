@@ -56,6 +56,7 @@ def make_request_post(url, data, cookie_file, cookie_jar, TOKEN):
 
 def get_decrypted_data(url,uname,passwd):
     status = make_request("https://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
+    print("DD KEY: "+KEY)
     print(status)
     if status == b'fail':
         make_request_post("https://www.sunnxt.com/login",'{"email":"'+uname+'","password":"'+passwd+'"}', cookie_file, cookie_jar, TOKEN)
@@ -107,7 +108,7 @@ def favicon():
 def home():
     cookie_file, cookie_jar, TOKEN = init_cookie_jar()
     KEY = getkey()
-    print("KEY: "+KEY)
+    print("HOME KEY: "+KEY)
     contentId = request.args.get('id')
     username = request.args.get('username')
     password = request.args.get('password')
