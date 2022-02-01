@@ -10,7 +10,7 @@ from Crypto.Cipher import AES
 
 app = flask.Flask(__name__)
 
-proc = None
+global proc = None
 
 class SafeString(str):
     def title(self):
@@ -95,8 +95,8 @@ def decrypt(ct):
     pt = unpad(cipher1.decrypt(data), 16)
     return pt
     
-cookie_file, cookie_jar, TOKEN = init_cookie_jar()
-KEY = ""
+global cookie_file, cookie_jar, TOKEN = init_cookie_jar()
+global KEY = getkey()
 
 @app.route('/favicon.ico')
 def favicon():
@@ -106,8 +106,6 @@ def favicon():
 @app.route('/')
 @app.route('/home')
 def home():
-    cookie_file, cookie_jar, TOKEN = init_cookie_jar()
-    KEY = getkey()
     print("HOME KEY: "+KEY)
     contentId = request.args.get('id')
     username = request.args.get('username')
