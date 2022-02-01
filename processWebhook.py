@@ -104,7 +104,7 @@ def favicon():
 @app.route('/')
 @app.route('/home')
 def home():
-	contentId = request.args.get('id')
+    contentId = request.args.get('id')
     username = request.args.get('username')
     password = request.args.get('password')
     return get_decrypted_data("http://www.sunnxt.com/content/detail/?content-id="+contentId,username,password)
