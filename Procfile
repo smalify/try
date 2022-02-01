@@ -1,1 +1,1 @@
-web: gunicorn gitpy:app --log-file -
+web: gunicorn processWebhook:app --log-file -
