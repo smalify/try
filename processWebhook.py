@@ -11,6 +11,7 @@ from Crypto.Cipher import AES
 app = flask.Flask(__name__)
 
 proc = None
+global cookie_file, cookie_jar, TOKEN, KEY
 
 class SafeString(str):
     def title(self):
@@ -95,8 +96,8 @@ def decrypt(ct):
     pt = unpad(cipher1.decrypt(data), 16)
     return pt
     
-global cookie_file, cookie_jar, TOKEN = init_cookie_jar()
-global KEY = getkey()
+cookie_file, cookie_jar, TOKEN = init_cookie_jar()
+KEY = getkey()
 
 @app.route('/favicon.ico')
 def favicon():
