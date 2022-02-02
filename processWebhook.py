@@ -3,6 +3,8 @@ from flask import send_from_directory, request
 import base64
 from Crypto.Cipher import AES
 
+app = flask.Flask(__name__)
+
 def decrypt(ct):
     from Crypto.Util.Padding import pad, unpad
     data = base64.b64decode(ct)
