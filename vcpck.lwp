@@ -1,3 +1,0 @@
-#LWP-Cookies-2.0
-Set-Cookie3: XSRF-TOKEN=eyJpdiI6ImxMQ0ZMbm9ldjhETTZmc2JxZ05cL0VBPT0iLCJ2YWx1ZSI6Ikkwcnpnd2RJc2FETTVrQzZLMXN2XC9sQ2VRdjRGMWE5UWNvbTNSZkM3d2JEemxxaGV1NTRtQ3NCdEE4ZXhPa25rTmtyUEk4bGdIOE1EdWNxS1VtNHFJdz09IiwibWFjIjoiNmE3MWJiYTBmNjg2YmQ0MGVkZGE3ZmI2NjE2NTFkMWJhZjBjMzE5NGY5ZTdkOGQxMTlkZGJiY2ZlYzMwYTMyMyJ9; path="/"; domain="www.sunnxt.com"; path_spec; expires="2022-02-09 00:03:22Z"; version=0
-Set-Cookie3: laravel_session=0yustkdCR6Msr7paREiNJxJlNzYoRxkOwwyTiaM5; path="/"; domain="www.sunnxt.com"; path_spec; expires="2022-02-09 00:03:22Z"; HttpOnly=None; version=0
