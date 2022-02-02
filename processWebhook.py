@@ -7,6 +7,7 @@ from Crypto.Cipher import AES
 app = flask.Flask(__name__)
 
 def decrypt(ct):
+    print("encdata: "+ct)
     from Crypto.Util.Padding import pad, unpad
     data = base64.b64decode(ct)
     cipher1 = AES.new("$71Pfb052473A3s6".encode("utf8"), AES.MODE_CBC, "0000000000000000".encode("utf8"))
