@@ -1,3 +1,5 @@
+import flask
+from flask import send_from_directory, request
 import http.cookiejar as cookielib
 import os, sys, re
 import urllib
@@ -6,7 +8,10 @@ import json, subprocess
 import base64
 from Crypto.Cipher import AES
 
+app = flask.Flask(__name__)
+
 proc = None
+global cookie_file, cookie_jar, TOKEN, KEY
 
 class SafeString(str):
     def title(self):
@@ -19,7 +24,6 @@ def init_cookie_jar():
     cookie_file = 'vcpck.lwp'
     cookie_jar = cookielib.LWPCookieJar()
     if os.path.exists(cookie_file):
-        print("in")
         cookie_jar.load(cookie_file, ignore_discard=True)
     TOKEN = ""
     return cookie_file, cookie_jar, TOKEN
@@ -45,21 +49,19 @@ def make_request_post(url, data, cookie_file, cookie_jar, TOKEN):
     request.add_header("sec-fetch-mode", 'cors')
     request.add_header("sec-fetch-site", 'same-origin')
     request.add_header("x-requested-with", 'XMLHttpRequest')
-    response = opener.open(request, data)
+    response = opener.open(request, data.encode("utf8"))
 
     data = response.read()
     cookie_jar.save(cookie_file, ignore_discard=True)
     return data
 
 def get_decrypted_data(url,uname,passwd):
-    status = make_request("https://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
+    status = make_request("http://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
+    print("DD KEY: "+KEY)
     print(status)
     if status == b'fail':
-        print(status)
-        make_request_post("https://www.sunnxt.com/login",'{"email":"'+uname+'","password":"'+passwd+'"}', cookie_file, cookie_jar, TOKEN)
-        status = make_request("https://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
-        if status == b'success':
-            print("Signed-in successfully.")
+        make_request_post("http://www.sunnxt.com/login",'{"email":"'+uname+'","password":"'+passwd+'"}', cookie_file, cookie_jar, TOKEN)
+        status = make_request("http://www.sunnxt.com/checkUSERSESSION", cookie_file, cookie_jar, TOKEN, True)
     data = make_request(url, cookie_file, cookie_jar, TOKEN, True)
     data = decrypt(data)
     return data
@@ -82,7 +84,7 @@ def retriveVoD(url, fname):
 
 def getkey():
     from bs4 import BeautifulSoup
-    response = make_request("https://www.sunnxt.com", cookie_file, cookie_jar, TOKEN)
+    response = make_request("http://www.sunnxt.com", cookie_file, cookie_jar, TOKEN)
     soup = BeautifulSoup(response,features="html.parser")
     metas = soup.find_all('meta')
     return [ meta.attrs['content'] for meta in metas if 'name' in meta.attrs and meta.attrs['name'] == 'csrf-token' ][0]
@@ -96,5 +98,22 @@ def decrypt(ct):
     
 cookie_file, cookie_jar, TOKEN = init_cookie_jar()
 KEY = getkey()
-print(KEY)
-print(get_decrypted_data("https://www.sunnxt.com/content/detail/?content-id=14020","joesmiches@gmail.com","colombo2022"))
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/favicon.png')
+
+@app.route('/')
+@app.route('/home')
+def home():
+    print("HOME KEY: "+KEY)
+    contentId = request.args.get('id')
+    username = request.args.get('username')
+    password = request.args.get('password')
+    return get_decrypted_data("http://www.sunnxt.com/content/detail/?content-id="+contentId,username,password)
+
+if __name__ == "__main__":
+    app.secret_key = 'ItIsASecret'
+    app.debug = True
+    app.run()
